@@ -8,7 +8,7 @@ int main()
     char encrypt[256] = {0},
          decrypt[256] = {0};
     char ALPHABET[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZ"};
-    char key[256] = {0};
+    char key[256];
     size_t length = sizeof(encrypt);
 
     while (1) 
@@ -17,9 +17,10 @@ int main()
         scanf("%s", encrypt);
         if (strlen(encrypt) < 26)
         {   
-            strcopy(key, encrypt);
+            strcpy(key, encrypt);
             removeDuplicates(encrypt);
-            printf("Your key  word is: %s\n", encrypt);
+            toUpper(encrypt);
+            toUpper(key);
             break;
         }
         else 
@@ -29,6 +30,9 @@ int main()
     }
 
     initializeEncryptArray(encrypt, ALPHABET);
-    printf("Here's yo shit: %s\n", key);
+    encryptWord(ALPHABET, encrypt, key);
+    printf("ENCRYPT: %s\n", key);
+    initializeDecryptArray(ALPHABET, encrypt, key);
+    printf("DECRYPT: %s\n", key);
     return 0;
 }

@@ -21,15 +21,18 @@ char * removeDuplicates(char word[])
             j++;
         }
     }
+    word[j] = '\0';
+    return word;
+}
 
-    // Converts the string to uppercase chars
+// Converts the string to uppercase chars
+void toUpper(char word[])
+{
+    int i;
     for(i = 0; word[i] != '\0'; i++)
     {
         word[i] = toupper(word[i]);
     }
-
-    word[j] = '\0';
-    return word;
 }
 
 // search the first num characters in array charArray for character target
@@ -63,10 +66,40 @@ void initializeEncryptArray(char key[], char encrypt[])
     }
 }
 
-// initialize the decrypt array with appropriate substitute letters based on the ecrypt array
-void initializeDecryptArray(char encrypt[], char decrypt[])
+// computes the encryption given the alphabet and the cipher
+void encryptWord(char ALPHABET[], char cipher[], char key[])
 {
+    int i, j;
+    
+    for(i = 0; key[i] != '\0'; i++)
+    {
+        for(j = 0; ALPHABET[j]; j++)
+        {
+            if(key[i] == ALPHABET[j])
+            {
+                key[i] = cipher[j];
+                break;
+            }
+        }
+    }
+}
 
+// initialize the decrypt array with appropriate substitute letters based on the ecrypt array
+void initializeDecryptArray(char ALPHABET[], char cipher[], char key[])
+{
+    int i, j;
+    
+    for(i = 0; key[i] != '\0'; i++)
+    {
+        for(j = 0; cipher[j] != '\0'; j++)
+        {
+            if(key[i] == cipher[j])
+            {
+                key[i] = ALPHABET[j];
+                break;
+            }
+        }
+    }
 }
 
 // process data from the input file and write the result to the output file

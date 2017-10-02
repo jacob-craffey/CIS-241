@@ -107,11 +107,20 @@ void initializeDecryptArray(char ALPHABET[], char cipher[], char key[])
 // pass the decrypt array to parameter substitute if decryption is intended
 void processInput(FILE * inf, FILE * outf, char substitute[])
 {
+    char key[256];
+    char const ALPHABET[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZ"};
 
     if(inf)
     {
         while(fgets(substitute, 256, inf) != NULL)
         fclose(inf);
     }   
-    printf("%s\n", substitute);
+    strcpy(key, substitute);
+    toUpper(substitute);
+    toUpper(key);
+    removeDuplicates(substitute);
+    initializeEncryptArray(substitute, ALPHABET);
+    encryptWord(ALPHABET, substitute, key);
+    printf("ENCRYPT: %s\n", substitute);
+    printf("KEY: %s\n", key);
 }

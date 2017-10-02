@@ -21,7 +21,7 @@ char * removeDuplicates(char word[])
             j++;
         }
     }
-    word[j] = '\0';
+    word[j-1] = '\0';
     return word;
 }
 
@@ -37,10 +37,10 @@ void toUpper(char word[])
 
 // search the first num characters in array charArray for character target
 // return a non-zero integer if found, otherwise, return 0
-int targetFound(char charArray[], int num, char target)
-{
+// int targetFound(char charArray[], int num, char target)
+// {
 
-}
+// }
 
 // initialize the encrypt array with appropriate cipher letters according to the given key
 void initializeEncryptArray(char key[], char encrypt[])
@@ -108,7 +108,7 @@ void initializeDecryptArray(char ALPHABET[], char cipher[], char key[])
 void processInput(FILE * inf, FILE * outf, char substitute[])
 {
     char key[256];
-    char const ALPHABET[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZ"};
+    char ALPHABET[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZ"};
 
     if(inf)
     {
@@ -118,9 +118,17 @@ void processInput(FILE * inf, FILE * outf, char substitute[])
     strcpy(key, substitute);
     toUpper(substitute);
     toUpper(key);
-    removeDuplicates(substitute);
+    substitute = removeDuplicates(substitute);
     initializeEncryptArray(substitute, ALPHABET);
     encryptWord(ALPHABET, substitute, key);
-    printf("ENCRYPT: %s\n", substitute);
-    printf("KEY: %s\n", key);
+
+    printf("KEY: %s\n", substitute);
+    printf("ENCRYPT: %s\n", key);
+
+    if(outf == NULL)
+    {
+        printf("Error opening file!\n");
+    }
+    fprintf(outf, "%s\n", key);
+
 }

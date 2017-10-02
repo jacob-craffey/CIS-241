@@ -8,33 +8,43 @@ int main(int argc, char *argv[])
 {
     char encrypt[256] = {0},
          decrypt[256] = {0};
+
+    char ALPHABET[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZ"};
     
     char key[256];
     char const EXTENSION[] = ".txt";
     size_t length = sizeof(encrypt);
     FILE * inFile;
     FILE * outFile;
-    int c;
+    FILE * keyFile;
+
+    char inFileName[256];
+    strcpy(inFileName, argv[3]);
+    strcat(inFileName, EXTENSION);
+    inFile = fopen(inFileName, "r");
+
+    char outFileName[256];
+    strcpy(outFileName, argv[4]);
+    strcat(outFileName, EXTENSION);
+    outFile = fopen(outFileName, "w+");
+
+
 
     if(*argv[1] == 'e')
     {
-        char inFileName[256];
-        strcpy(inFileName, argv[2]);
-        strcat(inFileName, EXTENSION);
-        inFile = fopen(inFileName, "r");
-
-        char outFileName[256];
-        strcpy(outFileName, argv[3]);
-        strcat(outFileName, EXTENSION);
-        outFile = fopen(outFileName, "w");
-
         processInput(inFile, outFile, encrypt);
-
-
+        
+        keyFile = fopen("Key.txt", "w");
+        fprintf(keyFile, "%s\n", encrypt);
     }
     else if(*argv[1] == 'd')
     {
-        
+        char keyFileName[256];
+        strcpy(keyFileName, argv[2]);
+        strcat(inFileName, EXTENSION);
+        keyFile = fopen(keyFileName, "r");
+
+        decryptInput(outFile, keyFile);
     }
     else
     {

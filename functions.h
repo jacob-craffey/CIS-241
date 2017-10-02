@@ -25,4 +25,6 @@ void initializeDecryptArray(char ALPHABET[], char cipher[], char key[]);
 // pass the decrypt array to the parameter substitute if the decryption is intended
 void processInput(FILE * inf, FILE * outf, char substitute[]);
 
+void decryptInput(FILE * outf, FILE * keyf);
+
 #endif

@@ -130,5 +130,22 @@ void processInput(FILE * inf, FILE * outf, char substitute[])
         printf("Error opening file!\n");
     }
     fprintf(outf, "%s\n", key);
+    // initializeDecryptArray(ALPHABET, substitute, key);
+    // printf("FINAL DECRYPT: %s\n", key);
 
 }
+
+void decryptInput(FILE * outf, FILE * keyf)
+{
+    char ALPHABET[] = {"ABCDEFGHIJKLMNOPQRSTUVWXYZ"};
+    char key[256];
+
+    if(keyf)
+    {
+        while(fgets(key, 256, keyf) != NULL)
+        fclose(keyf);
+    }
+
+    printf("DECRYPT KEY: %s\n", key);
+}
+

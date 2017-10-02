@@ -108,4 +108,10 @@ void initializeDecryptArray(char ALPHABET[], char cipher[], char key[])
 void processInput(FILE * inf, FILE * outf, char substitute[])
 {
 
+    if(inf)
+    {
+        while(fgets(substitute, 256, inf) != NULL)
+        fclose(inf);
+    }   
+    printf("%s\n", substitute);
 }

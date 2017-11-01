@@ -1,30 +1,74 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "operations.h"
 
+// finds the duplicate product
+product* find_duplicate(product *head) {
+    product *current = head;
+
+    while (current != NULL) {
+        if (strcmp(head->name, current->name) == 0) {
+            return current;
+        }
+        current = current->next;
+    }
+    return NULL;
+}
+
+// checks if the product is already in the shop's inventory
+product* check_duplicate(product* head) {
+    product *current = head->next;
+    char* name = head->name;
+
+    while (current != NULL) {
+        printf("compaing %s and %s\n", name, current->name);
+        if (strcmp(name, current->name) == 0) {
+            printf("MATCH!\n");
+            product* temp = head;
+            head = temp->next;
+            free(temp);
+        }
+        current = current->next;
+    }
+    return head;
+}
+
 // insert a node to the list
-int insert(product **l, product node) {
+product* create(product* next) {
+    product* new_product = (product*)malloc(sizeof(product));
+    char name[N];
 
-    l = &node.next;
+    if(new_product == NULL) {
+        printf("Error creating a new node.\n");
+        exit(0);
+    }
 
-    product new_product;
-
+    // store the the products data and create a new node
 	printf("\n1: Add product to store\n");
 	printf("Product name: ");
-	scanf("%s", new_product.name);
+    scanf("%s", new_product->name);
 	printf("Product quantity: ");
-	scanf("%f", &new_product.quantity_value);
+	scanf("%f", &new_product->quantity_value);
 	printf("Product unit: ");
-	scanf("%s", new_product.quantity_unit);
+	scanf("%s", new_product->quantity_unit);
 	printf("Price value: ");
-	scanf("%f", &new_product.price_value);
+	scanf("%f", &new_product->price_value);
 	printf("Price unit: ");
-	scanf("%s", new_product.price_unit);
+	scanf("%s", new_product->price_unit);
 
-    node.next = &new_product;
+    // points new_product to the 'next' product
+    new_product->next = next;
 
-	return 0;
+	return new_product;
+}
 
-
+// need the 'next' pointer to point to the 'head' pointer and
+// point to the head pointer of the new node.
+product* prepend(product* head) {
+    product* new_product = create(head);
+    head = new_product;
+    return head;
 }
 
 // remove a node from list
@@ -32,9 +76,17 @@ void rmItem(product *l, product *node) {
 
 }
 
-// show list
-void showList(product *l) {
+// traverses linked-list and prints all products
+// in the shop with their quantity
+void showList(product *head) {
+    product *current = head;
 
+    printf("===== Inventory =====\n");
+    while (current != NULL) {
+        printf("- %g %s\n", current->quantity_value, current->name);
+        current = current->next;
+    }
+    printf("=====================\n");
 }
 
 // load data from file inf
@@ -76,7 +128,7 @@ void displayMenu() {
 	printf("3: Check price of a product          4: Show products in store\n");
 	printf("5: Clean up a product from store     6: Find product\n");
 	printf("7: Inventory                         8: Done for today\n");
-	printf("-------------------------------------------------------------------\n");
+	printf("===================================================================\n");
 	printf("\nWhat do you want to do?\n");
 }
 

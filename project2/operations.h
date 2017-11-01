@@ -14,12 +14,15 @@ struct product {
 
 typedef struct product product;
 
+product* check_duplicate(product* head);
 
-int insert(product **l, product node);
+product* prepend(product* head);
+
+product* create(product* next);
 
 void rmItem(product *l, product *node);
 
-void showList(product *l);
+void showList(product *head);
 
 int loadData(char inf[], product **l);
 

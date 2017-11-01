@@ -7,15 +7,16 @@
 int main() {
 	int select;
 
-	product **list;
+	product** list;
+	product* head;
 
     while (1) {
         displayMenu();
         scanf("%d", &select);
 
         if (select == 1) {
-            product node;
-            insert(list, node);
+            head = prepend(head);
+            head = check_duplicate(head);
         }
         else if (select == 2) {
 
@@ -33,7 +34,7 @@ int main() {
 
         }
         else if (select == 7) {
-            showList(list);
+            showList(head);
         }
         else if (select == 8) {
             printf("Goodbye\n");

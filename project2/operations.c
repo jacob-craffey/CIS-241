@@ -21,10 +21,14 @@ product* check_duplicate(product* head) {
     product *current = head->next;
     char* name = head->name;
 
+    // traverses through the linked list,
+    // if matching products are found:
+    //   - add the quantity of the new and current product
+    //   - store sum in the current product
+    //   - delete the duplicated product
     while (current != NULL) {
-        printf("compaing %s and %s\n", name, current->name);
         if (strcmp(name, current->name) == 0) {
-            printf("MATCH!\n");
+            current->quantity_unit += head->quantity_unit;
             product* temp = head;
             head = temp->next;
             free(temp);

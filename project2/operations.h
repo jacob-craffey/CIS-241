@@ -31,6 +31,8 @@ void check_price(product *l, char p[]);
 
 void findItem(product *l, char p[]);
 
+void displayMenu();
+
 int doIt(char data[]);
 
 

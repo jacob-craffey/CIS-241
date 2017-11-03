@@ -28,7 +28,7 @@ product* check_duplicate(product* head) {
     //   - delete the duplicated product
     while (current != NULL) {
         if (strcmp(name, current->name) == 0) {
-            current->quantity_unit += head->quantity_unit;
+            current->quantity_value += head->quantity_value;
             product* temp = head;
             head = temp->next;
             free(temp);
@@ -76,19 +76,18 @@ product* prepend(product* head) {
 }
 
 // remove a node from list
-void rmItem(product *l, product *node) {
+product* rmItem(product *l, product *node) {
 
+    return l;
 }
 
 // traverses linked-list and prints all products
 // in the shop with their quantity
 void showList(product *head) {
-    product *current = head;
-
     printf("===== Inventory =====\n");
-    while (current != NULL) {
-        printf("- %g %s\n", current->quantity_value, current->name);
-        current = current->next;
+    while (head != NULL) {
+        printf("- %g %s\n", head->quantity_value, head->name);
+        head = head->next;
     }
     printf("=====================\n");
 }
@@ -106,8 +105,12 @@ int saveData(char outf[], product *l) {
 }
 
 // sell product product of quantity q
-float purchase(product *l, char product[], float q) {
-
+float purchase(product *l, float q) {
+    float item_quantity = l->quantity_value;
+    float result = item_quantity - q;
+    if (result > 0) {
+        return result;
+    }
 	return 0;
 }
 
@@ -117,8 +120,27 @@ void check_price(product *l, char p[]) {
 }
 
 // find a product p from list l
-void findItem(product *l, char p[]) {
+product* findItem(product *l, char p[]) {
 
+    while (l != NULL) {
+        if (strcmp(p, l->name) == 0) {
+            return l;
+        }
+        l = l->next;
+    }
+    return NULL;
+}
+
+
+int doesItemExist(product* head, char p[]) {
+
+    while (head != NULL) {
+        if (strcmp(p, head->name) == 0) {
+            return 1;
+        }
+        head = head->next;
+    }
+    return 0;
 }
 
 // displays main menu

@@ -20,7 +20,7 @@ product* prepend(product* head);
 
 product* create(product* next);
 
-void rmItem(product *l, product *node);
+product* rmItem(product *l, product *node);
 
 void showList(product *head);
 
@@ -28,11 +28,13 @@ int loadData(char inf[], product **l);
 
 int saveData(char outf[], product *l);
 
-float purchase(product *l, char product[], float q);
+float purchase(product *l, float q);
 
 void check_price(product *l, char p[]);
 
-void findItem(product *l, char p[]);
+product* findItem(product *l, char p[]);
+
+int doesItemExist(product* head, char p[]);
 
 void displayMenu();
 

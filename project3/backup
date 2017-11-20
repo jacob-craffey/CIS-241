@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# ========== variables ==========
+argCount=$#
+helpExist=false
+listExist=false
+countExist=false
+# ===============================
+
+# if no command line arguments, then echo and exit
+if [ $argCount -eq 0 ]; then
+  echo "The usage of this command is: backup [options] targetFileList"
+fi 
+
+# iterate over command line arguments
+# if '$var' matches any key command, mark the command as true
+for var in "$@"
+do
+  if [ "$var" == "--help" ]; then
+    helpExist=true
+  elif [ "$var" == '-l' ]; then
+    listExist=true
+  elif [ "$var" == '-n' ]; then
+    countExist=true
+  elif [ "$var" == '-nl' ] || [ "$var" == '-ln' ]; then
+    listExist=true
+    countExist=true
+  elif [[ "$var" == -* ]]; then
+    echo "backup: invalid option $var"
+  fi
+done
+
+# help
+if [ "$helpExist" == true ]; then
+  echo "HELP MENU"
+fi
+
+# list
+if [ "$listExist" == true ]; then
+  echo "================================"
+  echo "File List in .backup:"
+  ls ~/.backup
+  echo "================================"
+fi
+
+# count
+if [ "$countExist" == true ]; then
+  echo "================================"
+  echo "Number of files in .backup: $count"
+  ls ~/.backup | wc -l 
+  echo "================================"
+fi

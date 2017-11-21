@@ -27,13 +27,23 @@ do
     countExist=true
   elif [[ "$var" == -* ]]; then
     echo "backup: invalid option $var"
+  elif [ -f "$var" ]; then
+    if [ ! -d ~/.backup ]; then
+      mkdir ~/.backup
+    fi
+    cp $var ~/.backup
+    echo "$var in .backup"
+  elif [ -d "$var" ]; then
+    if [ ! -d ~/.backup ]; then
+      mkdir ~/.backup
+    fi
+    cp -R $var ~/.backup
+    echo "$var in .backup"
+  else
+    echo "Cannot find file/directory: $var"
   fi
 done
 
-# help
-if [ "$helpExist" == true ]; then
-  echo "HELP MENU"
-fi
 
 # list
 if [ "$listExist" == true ]; then
@@ -49,4 +59,24 @@ if [ "$countExist" == true ]; then
   echo "Number of files in .backup: $count"
   ls ~/.backup | wc -l 
   echo "================================"
+fi
+
+# help
+if [ "$helpExist" == true ]; then
+  echo "|==================================================|"
+  echo "|                   Help Menu                      |"                                       
+  echo "|--------------------------------------------------|"
+  echo "| This script is used to quickly backup your files |"
+  echo "| and directories.                                 |"
+  echo "| -------------------------------------------------|"
+  echo "| Script Format:                                   |"
+  echo "| backup [options] targetFileList                  |"
+  echo "| -------------------------------------------------|"
+  echo "| Options:                                         |"
+  echo "| -l --------> list files in backup directory      |"
+  echo "| -n --------> number of files in backup directory |"
+  echo "| -nl -ln ---> list files and number of files in   |"
+  echo "|              backup directory                    |"
+  echo "| --help ----> show help menu                      |"
+  echo "| =================================================|"
 fi
